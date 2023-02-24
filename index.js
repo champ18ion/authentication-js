@@ -18,7 +18,8 @@ const passport = require("passport");
 const passportLocal = require("./config/passport-local");
 const GoogleStrategy = require('./config/passport-google');
 const MongoStore = require("connect-mongo");
-const { notify } = require('./routes');
+const flash = require('connect-flash')
+const flashWare = require('./config/middleware')
 
 // set up view engine
 app.set("view engine", "ejs");
@@ -52,6 +53,9 @@ app.use(passport.session());
 
 // sets the authenticated user in the response
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash())
+app.use(flashWare.setFlash)
 
 // using express routers
 app.use(require("./routes"));

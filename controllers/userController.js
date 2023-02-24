@@ -37,6 +37,7 @@ module.exports.create = async function(req,res){
         console.log(req.body)
          // if password doesn't match
         if (password != confirm_password) {
+          req.flash('error','passwords do not match')
         return res.redirect("back");
         }
   
@@ -81,6 +82,7 @@ module.exports.updateUser = async function (req, res) {
     //match current password
     const passwordMatches = await bcrypt.compare(req.body.password, user.password);
     if(!passwordMatches){
+      req.flash('error','current password entered is invalid, try again:')
         console.log('current password entered is invalid, try again:');
         return res.redirect('back');
     }
@@ -91,6 +93,7 @@ module.exports.updateUser = async function (req, res) {
     user.password = hash;
     await user.save();
     console.log('Password updated');
+    req.flash('success','password updated successfully')
     return res.redirect('/sign-out');
 
 }
@@ -102,6 +105,7 @@ catch(e){
 
 // sign in and create a session for the user
 module.exports.createSession = (req, res) => {
+    req.flash('success',"signed in");
     return res.redirect("/");
   };
 
@@ -111,6 +115,7 @@ module.exports.destroySession = (req, res) => {
       if (err) {
         return next(err);
       }
+      req.flash('success','logged out')
       return res.redirect("/");
     });
   };

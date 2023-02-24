@@ -18,14 +18,42 @@
      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
      rel="stylesheet"
    />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css" integrity="sha512-0p3K0H3S6Q4bEWZ/WmC94Tgit2ular2/n0ESdfEX8l172YyQj8re1Wu9s/HT9T/T2osUw5Gx/6pAZNk3UKbESw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js" integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </head>
   <body>
     <%- include('_navbar') %>
     <!-- Rest of HTML code here -->
 
-    <div class="container">
-      <h1 class="display-1 text-center mt-5">Hello, <%=user.name%></h1>
-    </div>
+    <section class="h-100 gradient-custom-2">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col col-lg-9 col-xl-7">
+            <div class="card">
+              <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+                <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                    alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                    style="width: 150px; z-index: 1">
+                    <a href="/profile"><button type="button" class="btn btn-block me-3">
+                      Update Profile
+                    </button></a>
+                </div>
+                
+                <div class="ms-3" style="margin-top: 130px;">
+                  <h3 style="color: #b2beb5; text-transform: capitalize;"> <%=user.name%> </h3>
+                  <p style="color: #e2e5de;" > <%=user.email%> </p>
+                </div>
+              </div>
+              <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     
 
@@ -37,5 +65,25 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
   ></script>
+  <script>
+    <%if(flash.success && flash.success.length>0){%>
+       new Noty({
+         theme:'bootstrap-v4',
+         timeout:700,
+         type: 'success',
+         layout: 'topRight',
+         text: '<%=flash.success%>'
+       }).show();
+   <%} %>
+   <%if(flash.error && flash.error.length>0){%>
+       new Noty({
+         theme:'bootstrap-v4',
+         timeout:700,
+         type: 'error',
+         layout: 'topRight',
+         text: '<%=flash.error%>'
+       }).show();
+   <%} %>
+</script>
   </body>
 </html>

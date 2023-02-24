@@ -6,7 +6,7 @@ const LocalStratergy = require("passport-local").Strategy;
 
 // authentication using passport
 passport.use(
- new LocalStratergy({usernameField: 'email',passwordField: 'password'},async (email, password, done) => {
+ new LocalStratergy({usernameField: 'email',passwordField: 'password',passReqToCallback:true},async (req,email, password, done) => {
   try {
     // Find the user with the given username
     const user = await User.findOne({ email });
@@ -14,7 +14,7 @@ passport.use(
     // If the user does not exist, return an error
     if (!user) {
       console.log('User not found');
-      return done(null, false, { message: 'Incorrect email' });
+      return done(null, false, req.flash('error','invaid username or password'));
     }
 
     
@@ -25,7 +25,8 @@ passport.use(
     //verify password
     if (!passwordMatches) {
       console.log('Invalid password');
-      return done(null, false);
+     
+      return done(null, false, req.flash('error', "invalid username or password"));
     }
     
 

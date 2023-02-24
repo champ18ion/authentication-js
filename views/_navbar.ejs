@@ -21,35 +21,6 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Authentication cell</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard">Dashboard</a>
-          </li>
-          <!-- Navbar dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Dropdown
-            </a>
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="/interview/add-interview">Add new Interview</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="/student/add-student">Add new Student</a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="/profile"> Profile </a>
-              </li>
-            </ul>
-          </li>
           
         </ul>
         <%if(locals.user){%>
@@ -57,9 +28,9 @@
             <a href="/sign-out"><button type="button" class="btn btn-danger px-3 me-2">
               Log-out
             </button></a>
-            <a href="/download"><button type="button" class="btn btn-primary me-3">
-              Download report
-            </button></a> 
+             <a href="/profile"><button type="button" class="btn btn-primary me-3">
+              Update Profile
+            </button></a>
         </div>
           <%}else{%>
             <!-- Left links -->
