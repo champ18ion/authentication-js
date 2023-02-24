@@ -18,8 +18,7 @@ passport.use(new googleStrategy({
                 return done(null,user);
             }else{
                 User.create({
-                    firstname:profile.displayName,
-                    lastname:' ',
+                    name:profile.displayName,
                     email:profile.emails[0].value,
                     password:crypto.randomBytes(20).toString('hex')
                 },function(err,user){

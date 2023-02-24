@@ -13,9 +13,13 @@ module.exports.signIn = function(req,res){
 // render the Sign-up page
 module.exports.signUp = function(req,res){
     if (req.isAuthenticated()) {
-      return res.redirect("/profile");
+      return res.redirect("/home");
     }
      return res.render('sign-up',{title:'Sign-UP | Authentication Cell'})
+}
+// render home [page]
+module.exports.renderHome = function (req, res) {
+  return res.render('home', { title: 'Home Page', user: req.user });
 }
 
 // render the profile page
@@ -29,7 +33,7 @@ module.exports.profile = function (req, res) {
 // creating a new user
 module.exports.create = async function(req,res){
     try {
-        const{firstname,lastname,email,password,confirm_password}=req.body;
+        const{name,email,password,confirm_password}=req.body;
         console.log(req.body)
          // if password doesn't match
         if (password != confirm_password) {
@@ -48,15 +52,14 @@ module.exports.create = async function(req,res){
             const hash = await bcrypt.hash(plaintextPassword, saltRounds);
             if(!user){
                 await User.create({
-                    firstname,
-                    lastname,
+                    name,
                     email,
                     password:hash
                 },(err,user)=>{
                     if(err){
                         console.log('error in creating user')
                     }
-                    return res.redirect('/')
+                    return res.redirect('/log-in')
                 })
             }else{
                 console.log("error", "Email already registed!");
@@ -72,28 +75,30 @@ module.exports.create = async function(req,res){
 
 // update user Details
 module.exports.updateUser = async function (req, res) {
-    try {
-      const user = await User.findById(req.user.id);
-      const { firstname,lastname, password, confirm_password } = req.body;
-  
-      if (password != confirm_password) {
-        return res.redirect("back");
-      }
-  
-      if (!user) {
-        return res.redirect("back");
-      }
-      user.firstname = firstname;
-      user.lastname = lastname;
-      user.password = password;
-  
-      user.save();
-      return res.redirect("back");
-    } catch (err) {
-      console.log(err);
-      return res.redirect("back");
+  try{
+        
+    const user = await User.findOne({email:req.body.email});
+    //match current password
+    const passwordMatches = await bcrypt.compare(req.body.password, user.password);
+    if(!passwordMatches){
+        console.log('current password entered is invalid, try again:');
+        return res.redirect('back');
     }
-  };
+
+    const plaintextPassword = req.body.new_password;
+    const saltRounds = 10;
+    const hash = await bcrypt.hash(plaintextPassword, saltRounds);
+    user.password = hash;
+    await user.save();
+    console.log('Password updated');
+    return res.redirect('/sign-out');
+
+}
+catch(e){
+    console.log('Error in reseting password: ',e);
+}
+
+}
 
 // sign in and create a session for the user
 module.exports.createSession = (req, res) => {

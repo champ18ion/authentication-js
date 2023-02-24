@@ -34,42 +34,37 @@
         style="--bs-border-opacity: 0.5"
       >
         <div class="mb-3">
-          <label for="firstname" class="form-label">firstname</label>
+          <label for="name" class="form-label">email</label>
           <input
             type="text"
             class="form-control"
-            id="firstname"
-            name="firstname"
-            value="<%= profile_user.firstname %>"
+            id="name"
+            name="email"
+            value="<%= profile_user.email %>"
             required
           />
         </div>
         <div class="mb-3">
-          <label for="lastname" class="form-label">lastname</label>
-          <input type="text" class="form-control" id="lastname" name="lastname"
-          value="<%= profile_user.lastname %>" required />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">New password</label>
+          <label for="password" class="form-label">current password</label>
           <input
             type="password"
             class="form-control"
             id="password"
             name="password"
-            placeholder="Enter new password"
+            placeholder="Enter current password"
             required
           />
         </div>
         <div class="mb-3">
           <label for="confirm_password" class="form-label"
-            >Confirm Password</label
+            >new Password</label
           >
           <input
             type="password"
             class="form-control"
             id="confirm_password"
-            name="confirm_password"
-            placeholder="Enter confirm password"
+            name="new_password"
+            placeholder="Enter new password"
             required
           />
         </div>

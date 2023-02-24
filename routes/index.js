@@ -24,6 +24,8 @@ router.post(
     userController.createSession
   );
 
+  router.get('/home',userController.renderHome);
+
 // route for logout button
 router.get("/sign-out", userController.destroySession);
 
