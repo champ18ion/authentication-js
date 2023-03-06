@@ -20,6 +20,7 @@ const GoogleStrategy = require('./config/passport-google');
 const MongoStore = require("connect-mongo");
 const flash = require('connect-flash')
 const flashWare = require('./config/middleware')
+require('dotenv').config();
 
 // set up view engine
 app.set("view engine", "ejs");
@@ -37,8 +38,7 @@ app.use(
       maxAge: 1000 * 60 * 100,
     },
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://champ18ion:1V1q1XMHGIyNLfNL@cluster0.jxaps7z.mongodb.net/authenticate",
+      mongoUrl: process.env.MONGODB_URI,
       autoRemove: "disabled",
     }),
       function(err) {
